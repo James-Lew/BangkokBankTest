@@ -2,6 +2,7 @@ package com.example.BangkokBankTest.controller;
 
 import com.example.BangkokBankTest.model.User;
 import com.example.BangkokBankTest.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,14 +19,14 @@ public class UserController {
     }
 
 
-    @GetMapping("/users")
+    @GetMapping(path="/users" , produces={"application/json"})
     public ResponseEntity<List<User>> getAllUsers(){
 
         return  new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
 
     }
 
-    @GetMapping("/users/{userId}")
+    @GetMapping(path="/users/{userId}", produces={"application/json"})
     public ResponseEntity<User> getUserById(@PathVariable long userId){
 
         User user = userService.getUserById(userId);
@@ -37,13 +38,13 @@ public class UserController {
 
     }
 
-    @PostMapping("/users")
-    public ResponseEntity<?> addProduct(@RequestBody User user){
+    @PostMapping(path="/users", consumes={"application/json"})
+    public ResponseEntity<?> addUser(@Valid @RequestBody User user){
         return new ResponseEntity<>( userService.createUser(user), HttpStatus.CREATED);
     }
 
-    @PutMapping("/users/{userId}")
-    public ResponseEntity<Object> updateUser(@PathVariable Long userId, @RequestBody User updatedUser) {
+    @PutMapping(path="/users/{userId}", consumes={"application/json"})
+    public ResponseEntity<Object> updateUser(@PathVariable Long userId, @Valid @RequestBody User updatedUser) {
 
         User user= userService.getUserById(userId);
         if (user != null){
@@ -56,7 +57,7 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public ResponseEntity<String> deleteProduct(@PathVariable long userId){
+    public ResponseEntity<String> deleteUser(@PathVariable long userId){
         User user= userService.getUserById(userId);
         if (user != null){
             userService.deleteUser(userId);

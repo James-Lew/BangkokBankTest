@@ -30,7 +30,7 @@ public class UserController {
 
         User user = userService.getUserById(userId);
 
-        if(user.getId() > 0)
+        if(user != null)
             return new ResponseEntity<>(user,HttpStatus.OK);
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

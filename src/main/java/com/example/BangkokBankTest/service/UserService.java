@@ -26,7 +26,6 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        user.setId((long) (userData.size() + 1));
         userData.put(user.getId(), user);
         return user;
     }
